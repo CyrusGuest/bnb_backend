@@ -16,15 +16,19 @@ app.get("/api/v1/health", async (req, res) => {
 });
 
 app.post("/api/v1/create-message", async (req, res) => {
-  const message = req.body;
+  const inquiry = req.body;
+
+  const services = toString(inquiry.services);
 
   const params = {
     TableName: "bnb-message",
     Item: {
-      MESSAGE_ID: { N: toString(Date.now()) },
-      MESSAGE_EMAIL: { S: message.email },
-      MESSAGE_SUBJECT: { S: message.subject },
-      MESSAGE_CONTENT: { S: message.content },
+      INQUIRY: { N: toString(Date.now()) },
+      INQUIRY_NAME: { S: inquiry.contactInfo.name },
+      INQUIRY_EMAIL: { S: inquiry.contactInfo.email },
+      INQUIRY_TEL: { S: inquiry.contactInfo.tel },
+      INQUIRY_DESCRIPTION: { S: inquiry.contactInfo.description },
+      INQUIRY_SERVICES: { S: services },
     },
   };
 
