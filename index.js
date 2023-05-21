@@ -35,8 +35,10 @@ app.post("/api/v1/create-message", async (req, res) => {
   ddb.putItem(params, (err, data) => {
     if (err) {
       console.log("Error", err);
+      res.status(400).json({ returnedMessage: err });
     } else {
       console.log("Success", data);
+      res.status(200).json({ returnedMessage: data });
     }
   });
 });
